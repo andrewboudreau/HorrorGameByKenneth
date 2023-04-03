@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Horror Game by Kenneth</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="title-screen" class="scene">
+			<div id="start-overlay">
+				<h1>Horror Game by Kenneth</h1>
+				<button id="start-button">Start</button>
+			</div>
+        </div>
+        <div id="stage1" class="scene hidden">
+            <img src="door1.png" class="door" data-door="1" alt=""/>
+            <img src="door2.png" class="door" data-door="2" alt=""/>
+            <img src="door3.png" class="door" data-door="3" alt=""/>
+        </div>
+    </div>
+    <script>
+
+	document.addEventListener("DOMContentLoaded", () => {
+	  const startButton = document.getElementById("start-button");
+	  const titleScreen = document.getElementById("title-screen");
+	  const stage1 = document.getElementById("stage1");
+	  const doors = document.getElementsByClassName("door");
+
+	  function changeScene(fromScene, toScene) {
+		fromScene.classList.add("hidden");
+		toScene.classList.remove("hidden");
+	  }
+
+	  startButton.addEventListener("click", () => {
+		changeScene(titleScreen, stage1);
+
+		const selectedDoor = Math.floor(Math.random() * 3) + 1;
+
+		for (const door of doors) {
+		  door.addEventListener("click", (e) => {
+			if (parseInt(e.target.dataset.door) === selectedDoor) {
+			  alert("You chose the correct door!");
+			} else {
+			  alert("Wrong door! Try again!");
+			}
+			location.reload();
+		  });
+		}
+	  });
+	});
+	</script>
+</body>
+</html>

@@ -1,17 +1,19 @@
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     overflow-y: hidden; /* Hide vertical scrollbar */
     overflow-x: hidden; /* Hide horizontal scrollbar */
+    background-color: black;
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .scene {
-    /* background-size: contain; */
+    background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     position: absolute;
@@ -21,56 +23,62 @@ body {
     height: 100%;
 }
 
-/* Add keyframes for the zoom effect */
-@keyframes zoomIn {
-    0% {
-        transform: scale(1);
-    }
-
-    100% {
-        transform: scale(1.5) translateY(-10%);
-    }
-}
-
-/* Apply the zoom effect to the title screen */
-#title-screen {
-    animation-name: zoomIn;
-    animation-duration: 5s; /* Adjust the duration of the zoom effect */
-    animation-timing-function: ease-in-out;
-    animation-fill-mode: forwards; /* Keep the final state of the animation */
-}
-
-#title-screen {
-    background-size:contain;
-    background-color: #000; /* Add a dark background color to blend with the image */
+/* Apply styles to the title scene */
+#title-scene {
     background-image: url('victorian-house.png');
+    animation-name: extendedZoomIn;
+    animation-duration: 8s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    z-index: 5;
+}
+
+/* Apply styles to the title door scene */
+#title-door-scene {
+    background-image: url('title-screen-door.png');
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
+    z-index: 4;
+    animation-name: fadeIn;
+    animation-duration: 6s;
+    /*animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;*/
 }
 
-    #title-screen h1 {
-        font-size: 48px;
-        color: white;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-    }
+#title-scene h1 {
+    margin-top: 150px;
+    margin-left: 150px;
+    font-size: 48px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    z-index: 5;
+}
 
 #start-button {
-    padding: 10px 20px;
-    font-size: 24px;
-    background-color: #ff0000;
+    padding: 200px 100px;
+    font-size: 0;
+    background-color: transparent;
     color: white;
     border: none;
     cursor: pointer;
 }
 
-#stage1 {
-    background-image: url('three-doors.jpg');
+/* Apply styles to the stage1 scene */
+.stage {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+}
+
+#stage1 {
+    /* background-image: url('three-doors.jpg'); */
+}
+
+#stage2 { 
+    /* background-image: url('three-doors.jpg'); */
 }
 
 .door {
@@ -78,3 +86,56 @@ body {
     cursor: pointer;
 }
 
+/* Add keyframes for the extended zoom effect */
+@keyframes extendedZoomIn {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    95% {
+        transform: scale(1.75) translateY(-20%);
+    }
+
+    100% {
+        transform: scale(1.75) translateY(-20%);
+        opacity: 0;
+    }
+}
+
+/* Add keyframes for the fade-in effect */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    95% {
+        opacity: .2;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
+/* Add styles for the title area */
+.title-area {
+    position: absolute;
+    top: 10%;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+    .title-area h2 {
+        font-size: 36px;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    .title-area p {
+        font-size: 24px;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    }

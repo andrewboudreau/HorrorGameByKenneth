@@ -3,53 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Horror Game by Kenneth</title>
+    <title>Horror Game By Kenneth</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div id="game-container">
-        <div id="title-screen" class="scene">
-			<div id="start-overlay">
-				<h1>Horror Game by Kenneth</h1>
-				<button id="start-button">Start</button>
-			</div>
+        <div id="title-scene" class="scene">
+            <h1>Horror Game by Kenneth</h1>
         </div>
-        <div id="stage1" class="scene hidden">
-            <img src="door1.png" class="door" data-door="1" alt=""/>
-            <img src="door2.png" class="door" data-door="2" alt=""/>
-            <img src="door3.png" class="door" data-door="3" alt=""/>
+        <div id="title-door-scene" class="scene fadeIn">
+            <button id="start-button" class="hidden">Start</button>
+        </div>
+        <div id="stage1" class="scene stage hidden">
+            <div class="title-area">
+                <h2>Choose a Door</h2>
+                <p>Click the door - beware, some lead to safe passage, others hide monsters!</p>
+            </div>
+            <img src="victorian\door1.png" class="door" data-door="1" alt="" />
+            <img src="victorian\door2.png" class="door" data-door="2" alt="" />
+            <img src="victorian\door3.png" class="door" data-door="3" alt="" />
+        </div>
+        <div id="stage2" class="scene stage hidden">
+            <img src="scifi\door1.png" class="door" data-door="1" alt="" />
+            <img src="scifi\door2.png" class="door" data-door="2" alt="" />
+            <img src="scifi\door3.png" class="door" data-door="3" alt="" />
+        </div>
+        <div id="stage3" class="scene stage hidden">
+            <img src="victorian-illustration\door1.png" class="door" data-door="1" alt="" />
+            <img src="victorian-illustration\door2.png" class="door" data-door="2" alt="" />
+            <img src="victorian-illustration\door3.png" class="door" data-door="3" alt="" />
         </div>
     </div>
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const titleScene = document.getElementById("title-scene");
+            const titleDoorScene = document.getElementById("title-door-scene");
+            const startButton = document.getElementById("start-button");
+            const stage1 = document.getElementById("stage1");
+            const stage2 = document.getElementById("stage2");
 
-	document.addEventListener("DOMContentLoaded", () => {
-	  const startButton = document.getElementById("start-button");
-	  const titleScreen = document.getElementById("title-screen");
-	  const stage1 = document.getElementById("stage1");
-	  const doors = document.getElementsByClassName("door");
+            function changeScene(fromScene, toScene) {
+                fromScene.classList.add("hidden");
+                toScene.classList.remove("hidden");
+            }
 
-	  function changeScene(fromScene, toScene) {
-		fromScene.classList.add("hidden");
-		toScene.classList.remove("hidden");
-	  }
+            setTimeout(() => {
+                titleScene.classList.add("hidden");
+                titleDoorScene.classList.remove("hidden");
+                startButton.classList.remove("hidden");
+            }, 6000); // Change the scene after the Title Scene animation is completed
 
-	  startButton.addEventListener("click", () => {
-		changeScene(titleScreen, stage1);
+            startButton.addEventListener("click", () => {
+                titleDoorScene.classList.add("hidden");
+                stage1.classList.remove("hidden");
+            });
 
-		const selectedDoor = Math.floor(Math.random() * 3) + 1;
-
-		for (const door of doors) {
-		  door.addEventListener("click", (e) => {
-			if (parseInt(e.target.dataset.door) === selectedDoor) {
-			  alert("You chose the correct door!");
-			} else {
-			  alert("Wrong door! Try again!");
-			}
-			location.reload();
-		  });
-		}
-	  });
-	});
-	</script>
+            const doors = document.querySelectorAll(".door");
+            doors.forEach((door) => {
+                door.addEventListener("click", () => {
+                    // Implement game logic here
+                    console.log("Door clicked:", door.dataset.door);
+                    if (door.dataset.door == 1) {
+                        changeScene(stage1, stage2);
+                    }
+                    if (door.dataset.door == 2) {
+                        alert("you win");
+                    }
+                    if (door.dataset.door == 3) {
+                        alert("you died");
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
